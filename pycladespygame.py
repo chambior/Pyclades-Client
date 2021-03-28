@@ -1,9 +1,11 @@
 import pygame
 import inputbox
+import network
+import board as brd
 
 COLOR_INACTIVE = pygame.Color('lightskyblue3')
 COLOR_ACTIVE = pygame.Color('dodgerblue2')
-FONT = pygame.font.Font(None, 16)
+FONT = pygame.font.Font(None, 18)
 
 screen = pygame.display.set_mode((1280, 720))
 
@@ -22,9 +24,13 @@ def getMsg(str):
 
 def main():
 	clock = pygame.time.Clock()
-	commandline = inputbox.InputBox(100, 500, 280, 16, '', COLOR_ACTIVE, COLOR_INACTIVE, FONT)
 	client_live = False
 	prevID = -1
+
+	#Déclaration des éléments de l'interface
+	commandline = inputbox.InputBox(6, 692, 242, 22, '', COLOR_ACTIVE, COLOR_INACTIVE, FONT)
+	board = brd.Board(screen, [255,6], [1019,708])
+
 	while not client_live:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -38,10 +44,12 @@ def main():
 
 		#Mettre toute les updates
 		commandline.update()
+		board.update(network.send("getBoard"))
 
 		#Mettre tout les draws
-		screen.fill((255, 255, 255))
+		screen.fill((50, 50, 50))
 		commandline.draw(screen)
+		board.draw()
 
 		#Laisser à la fin
 		pygame.display.flip()

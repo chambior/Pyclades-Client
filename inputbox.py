@@ -45,8 +45,8 @@ class InputBox:
 
     def update(self):
         # Resize the box if the text is too long.
-        width = max(200, self.txt_surface.get_width()+10)
-        self.rect.w = width
+        if(self.rect.w < self.txt_surface.get_width()+10):
+            self.text = self.text[:-1]
 
     def draw(self, screen):
         # Blit the text.
