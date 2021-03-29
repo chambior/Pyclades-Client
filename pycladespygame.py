@@ -8,6 +8,7 @@ COLOR_ACTIVE = pygame.Color('dodgerblue2')
 FONT = pygame.font.Font(None, 18)
 
 screen = pygame.display.set_mode((1280, 720))
+pygame.display.set_caption('Pyclades')
 
 def getID(str):
 	i = 0
@@ -21,20 +22,19 @@ def getMsg(str):
 		i+=1
 	return str[i+1:]
 
-
 def main():
 	clock = pygame.time.Clock()
-	client_live = False
+	client_live = True
 	prevID = -1
 
 	#Déclaration des éléments de l'interface
 	commandline = inputbox.InputBox(6, 692, 242, 22, '', COLOR_ACTIVE, COLOR_INACTIVE, FONT)
-	board = brd.Board(screen, [255,6], [1019,708])
+	board = brd.Board(screen, eval(network.send("getBoard")), [255,6], [1019,708])
 
-	while not client_live:
+	while client_live:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
-				client_live = True
+				client_live = False
 			command = commandline.handle_event(event)
 
 		#Le vrai programme est ici
@@ -44,7 +44,7 @@ def main():
 
 		#Mettre toute les updates
 		commandline.update()
-		board.update(network.send("getBoard"))
+		board.update(eval(network.send("getBoard")))
 
 		#Mettre tout les draws
 		screen.fill((50, 50, 50))
