@@ -1,4 +1,5 @@
 import pygame
+import textures
 
 class Map:
     def __init__(self, surface, tiles, offset = [100,612]):
@@ -31,7 +32,7 @@ class Map:
             ei = eval(i)
             eiw = self.tiles[i]["Water horns"]
             if(eiw):
-                self.surface.blit(pygame.image.load("./assets/textures/misc/{}horn.png".format(eiw)),
+                self.surface.blit(textures.getImage('misc', '1horn'),
                 [xOffset + ei[0] * 32 + ei[1] * 32,
                 yOffset - ei[0] * 56 + ei[1] * 56 - 25])
 
@@ -46,7 +47,6 @@ class Fleets:
     def draw(self):
         xOffset = self.offset[0] + 10
         yOffset = self.offset[1]
-        #PLUS TARD, LOAD LES SPRITES A L'AVANCE, LES METTRE EN GLOBAL DANS UN DICT nomsprite: objetpygameimagecorrespondant
         for i in self.fleets:
             ei = eval(i)
             playerID = self.fleets[i]["PlayerID"]
@@ -65,9 +65,9 @@ class Fleets:
             else:
                 shipcolor = "neutral"
 
-            picname = "./assets/textures/ships/ship_{}_{}.png".format(shipcolor, shipsize)
+            picname = "ship_{}_{}".format(shipcolor, shipsize)
 
-            self.surface.blit(pygame.image.load(picname),
+            self.surface.blit(textures.getImage("ships", picname),
             [xOffset + ei[0] * 32 + ei[1] * 32 - 30,
             yOffset - ei[0] * 56 + ei[1] * 56 - 20])
 
