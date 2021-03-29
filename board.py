@@ -49,7 +49,6 @@ class Fleets:
         #PLUS TARD, LOAD LES SPRITES A L'AVANCE, LES METTRE EN GLOBAL DANS UN DICT nomsprite: objetpygameimagecorrespondant
         for i in self.fleets:
             ei = eval(i)
-            print(self.fleets[i])
             playerID = self.fleets[i]["PlayerID"]
             shipsize = self.fleets[i]["Size"]
 
@@ -66,8 +65,7 @@ class Fleets:
             else:
                 shipcolor = "neutral"
 
-            picname = "./assets/textures/ships/ship_{}_{}.png".format(playerID, shipsize)
-            print(picname)
+            picname = "./assets/textures/ships/ship_{}_{}.png".format(shipcolor, shipsize)
 
             self.surface.blit(pygame.image.load(picname),
             [xOffset + ei[0] * 32 + ei[1] * 32 - 30,
