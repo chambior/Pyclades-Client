@@ -22,6 +22,7 @@ def getMsg(str):
 		i+=1
 	return str[i+1:]
 
+
 def main():
 	clock = pygame.time.Clock()
 	client_live = True
