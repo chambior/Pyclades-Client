@@ -2,6 +2,7 @@ import pygame
 import inputbox
 import network
 import board as brd
+import godboard
 
 COLOR_INACTIVE = pygame.Color('lightskyblue3')
 COLOR_ACTIVE = pygame.Color('dodgerblue2')
@@ -31,6 +32,7 @@ def main():
 	#Déclaration des éléments de l'interface
 	commandline = inputbox.InputBox(6, 692, 242, 22, '', COLOR_ACTIVE, COLOR_INACTIVE, FONT)
 	board = brd.Board(screen, eval(network.send("getBoard")), [255,6], [1019,708])
+	god_board = godboard.GodBoard(screen, eval(network.send("getGods")), eval(network.send("getAuctions")))
 
 	while client_live:
 		for event in pygame.event.get():
@@ -46,11 +48,13 @@ def main():
 		#Mettre toute les updates
 		commandline.update()
 		board.update(eval(network.send("getBoard")))
+		god_board.update(eval(network.send("getGods")), eval(network.send("getAuctions")))
 
 		#Mettre tout les draws
 		screen.fill((50, 50, 50))
 		commandline.draw(screen)
 		board.draw()
+		god_board.draw()
 
 		#Laisser à la fin
 		pygame.display.flip()

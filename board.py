@@ -89,8 +89,8 @@ class Fleet:
             picname = "ship_{}_{}".format(shipcolor, shipsize)
 
             self.surface.blit(textures.getImage("ships", picname),
-            [xOffset + ei[0] * 32 + ei[1] * 32 - 30,
-            yOffset - ei[0] * 56 + ei[1] * 56 - 20 + int(math.sin(self.timer)*4)])
+            [xOffset + ei[0] * 32 + ei[1] * 32 - 23,
+            yOffset - ei[0] * 56 + ei[1] * 56 - 28])
 
 class Island:
     def __init__(self, surface, islands, armies, offset = [100,612]):
@@ -124,7 +124,12 @@ class Island:
                 for ei in self.islands[i]["Tiles"]:
                     self.surface.blit(textures.getImage("maps", overlay),
                     [xOffset + ei[0] * 32 + ei[1] * 32 - 33,
-                    yOffset - ei[0] * 56 + ei[1] * 56 - 33 + int(math.sin(self.timer)*4)])
+                    yOffset - ei[0] * 56 + ei[1] * 56 - 33])
+
+                for bi in range(len(self.islands[i]['Buildings'])):
+                    b = self.islands[i]['Buildings'][bi]
+                    #WIP
+
 
         for army in self.armies:
             islandID = eval(army)
@@ -132,7 +137,8 @@ class Island:
 
             self.surface.blit(textures.getImage("armies", "default_{}".format(self.armies[army]["Size"])),
             [xOffset + ei[0] * 32 + ei[1] * 32 - 33,
-            yOffset - ei[0] * 56 + ei[1] * 56 - 33 + int(math.sin(self.timer)*4)])
+            yOffset - ei[0] * 56 + ei[1] * 56 - 33])
+
 
 
 class Board:
