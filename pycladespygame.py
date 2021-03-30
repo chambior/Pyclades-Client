@@ -48,7 +48,9 @@ def main():
 		#Mettre toute les updates
 		commandline.update()
 		board.update(eval(network.send("getBoard")))
-		god_board.update(eval(network.send("getGods")), eval(network.send("getAuctions")))
+		getgods = eval(network.send("getGods"))
+		#print(getgods)
+		god_board.update(getgods, eval(network.send("getAuctions")))
 
 		#Mettre tout les draws
 		screen.fill((50, 50, 50))

@@ -16,23 +16,30 @@ class God:
         self.lastvalue = 0
         self.currentplayer = 0
         self.currentvalue = 0
-        self.pos = pos
-        self.rect = pygame.Rect(260, 250+95*pos, 270, 90)
+        if(pos!=None):
+            self.pos = pos
+        else:
+            self.pos = 0
+        self.rect = pygame.Rect(260, 250+95*self.pos, 270, 90)
 
     def update(self, pos, auctions):
-        self.pos = pos
+        if(pos!=None):
+            self.pos = pos
+        else:
+            self.pos = 0
         if(auctions[0] != self.currentplayer):
             self.lastvalue = self.currentvalue
             self.lastplayer = self.currentplayer
             self.currentplayer = auctions[0]
             self.currentvalue = auctions[1]
-        self.rect = pygame.Rect(260, 250+95*pos, 270, 90)
+        self.rect = pygame.Rect(260, 250+95*self.pos, 270, 90)
 
     def draw(self):
         #pygame.draw.rect(self.screen, pygame.Color("blue"), self.rect, 2)
-        print("Place : {} Nom : {}".format(self.pos, self.name))
+        #print("Place : {} Nom : {}".format(self.pos, self.name))
         self.screen.blit(textures.getImage('gods', self.name), [self.rect.x, self.rect.y])
-
+        if(self.lastplayer):
+            self.screen.blit(textures.getImage('misc', 'mark_{}'.format(self.self.lastplayer)),[self.rect.x+271+29*self.pos, self.rect.y+91])
 class GodBoard:
     def __init__(self, screen, gods, auctions):
         self.screen = screen
@@ -49,7 +56,7 @@ class GodBoard:
         #self.rect = pygame.Rect(255, 245, 280, 469)
 
     def update(self, gods, auctions):
-        #ranger les dieux (self.order)
+        self.order = [find(1, gods), find(2, gods), find(3, gods), find(4, gods)]
         for i in range(4):
             self.gods[i].update(self.order[i], auctions[i])
         self.gods[4].update(4, (0,0,0))
