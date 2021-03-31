@@ -14,7 +14,7 @@ class InputBox:
         self.color = COLOR_INACTIVE
         self.text = text
         self.commandID = 0
-        print(self.color)
+        #print(self.color)
         self.txt_surface = self.font.render(text, True, self.color)
         self.active = False
 

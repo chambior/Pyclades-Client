@@ -23,6 +23,7 @@ class God:
         self.rect = pygame.Rect(260, 250+95*self.pos, 270, 90)
 
     def update(self, pos, auctions):
+        #print("AVANT UPDATE {}\n{}\n{}\n{}\n{}".format(self.name, auctions, self.currentplayer, self.currentvalue, self.lastplayer))
         if(pos!=None):
             self.pos = pos
         else:
@@ -33,13 +34,18 @@ class God:
             self.currentplayer = auctions[0]
             self.currentvalue = auctions[1]
         self.rect = pygame.Rect(260, 250+95*self.pos, 270, 90)
+        #print("APRES UPDATE {}\n{}\n{}\n{}\n{}".format(self.name, auctions, self.currentplayer, self.currentvalue, self.lastplayer))
 
     def draw(self):
         #pygame.draw.rect(self.screen, pygame.Color("blue"), self.rect, 2)
         #print("Place : {} Nom : {}".format(self.pos, self.name))
+        #print("DRAW Pas d'auctions ici\n{}\n{}\n{}\n{}".format(self.name, self.currentplayer, self.currentvalue, self.lastplayer))
         self.screen.blit(textures.getImage('gods', self.name), [self.rect.x, self.rect.y])
         if(self.lastplayer):
-            self.screen.blit(textures.getImage('misc', 'mark_{}'.format(self.self.lastplayer)),[self.rect.x+271+29*self.pos, self.rect.y+91])
+            self.screen.blit(textures.getImage('gods', 'mark_{}'.format(self.lastplayer)),[self.rect.x+8+21*self.lastvalue, self.rect.y+60])
+        if(self.currentplayer):
+            #print("Params de getimage :\n{}\n{}".format('gods', 'mark_{}'.format(self.currentplayer)))
+            self.screen.blit(textures.getImage('gods', 'mark_{}'.format(self.currentplayer)),[self.rect.x+8+21*self.currentplayer, self.rect.y+60])
 class GodBoard:
     def __init__(self, screen, gods, auctions):
         self.screen = screen

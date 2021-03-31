@@ -3,6 +3,7 @@ import inputbox
 import network
 import board as brd
 import godboard
+from button import Button
 
 COLOR_INACTIVE = pygame.Color('lightskyblue3')
 COLOR_ACTIVE = pygame.Color('dodgerblue2')
@@ -29,16 +30,28 @@ def main():
 	client_live = True
 	prevID = -1
 
+	board_g = eval(network.send("getBoard"))
+	gods_g = eval(network.send("getGods"))
+	auctions_g =  eval(network.send("getAuctions"))
+
+
 	#Déclaration des éléments de l'interface
 	commandline = inputbox.InputBox(6, 692, 242, 22, '', COLOR_ACTIVE, COLOR_INACTIVE, FONT)
-	board = brd.Board(screen, eval(network.send("getBoard")), [255,6], [1019,708])
-	god_board = godboard.GodBoard(screen, eval(network.send("getGods")), eval(network.send("getAuctions")))
+	board = brd.Board(screen, board_g, [255,6], [1019,708])
+	god_board = godboard.GodBoard(screen, gods_g, auctions_g)
+	fetch_board_button = Button(screen, label = "Actualiser")
 
 	while client_live:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				client_live = False
 			command = commandline.handle_event(event)
+
+			fetched = fetch_board_button.handle_event(event, network)
+			if(fetched[0]):
+				board_g = fetched[1]
+				gods_g = fetched[2]
+				auctions_g = fetched[3]
 
 		#Le vrai programme est ici
 		if command != '' and type(command) == str and getID(command) != prevID:
@@ -47,16 +60,16 @@ def main():
 
 		#Mettre toute les updates
 		commandline.update()
-		board.update(eval(network.send("getBoard")))
-		getgods = eval(network.send("getGods"))
-		#print(getgods)
-		god_board.update(getgods, eval(network.send("getAuctions")))
+		board.update(board_g)
+		god_board.update(gods_g, auctions_g)
+		fetch_board_button.update()
 
 		#Mettre tout les draws
 		screen.fill((50, 50, 50))
 		commandline.draw(screen)
 		board.draw()
 		god_board.draw()
+		fetch_board_button.draw()
 
 		#Laisser à la fin
 		pygame.display.flip()
