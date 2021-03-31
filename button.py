@@ -24,10 +24,13 @@ class Button:
     def handle_event(self, event, network):
         if(event.type == pygame.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos)):
             if(self.color != self.color_clicked):
+                self.color = self.color_clicked
+                self.draw()
+                pygame.display.flip()
                 board_g = eval(network.send("getBoard"))
                 gods_g = eval(network.send("getGods"))
                 auctions_g =  eval(network.send("getAuctions"))
-            self.color = self.color_clicked
+
             return [True, board_g, gods_g, auctions_g]
         else:
             self.color = self.color_default

@@ -39,7 +39,7 @@ def main():
 	commandline = inputbox.InputBox(6, 692, 242, 22, '', COLOR_ACTIVE, COLOR_INACTIVE, FONT)
 	board = brd.Board(screen, board_g, [255,6], [1019,708])
 	god_board = godboard.GodBoard(screen, gods_g, auctions_g)
-	fetch_board_button = Button(screen, label = "Actualiser")
+	fetch_board_button = Button(screen, label = "Actualiser", pos = [10,10])
 
 	while client_live:
 		for event in pygame.event.get():
